@@ -1,0 +1,28 @@
+{
+  "name": "ionic-simple-instagram-clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fernando74lr/Ionic-Simple-Instagram-Clone.git"
+  },
+  "author": "fernando lr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fernando74lr/Ionic-Simple-Instagram-Clone/issues"
+  },
+  "homepage": "https://github.com/Fernando74lr/Ionic-Simple-Instagram-Clone#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.18"
+  }
+}

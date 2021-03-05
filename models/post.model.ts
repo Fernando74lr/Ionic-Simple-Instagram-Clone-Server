@@ -1,0 +1,37 @@
+import { Schema, Document, model, connect } from 'mongoose';
+
+const postSchema = new Schema({
+
+    created: {
+        type: Date
+    },
+    message: {
+        type: String
+    },
+    img: [{
+        type: String
+    }],
+    coords: {
+        type: String // lat, lon
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: [true, 'Must exist a reference to a user']
+    }
+});
+
+postSchema.pre<IPost>('save', function(next) {
+    this.created = new Date();
+    next();
+});
+
+interface IPost extends Document {
+    created: Date;
+    message: string,
+    img: string[],
+    coords: string,
+    user: string
+}
+
+export const Post = model<IPost>('Post', postSchema);

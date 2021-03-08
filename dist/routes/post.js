@@ -44,4 +44,30 @@ postRoutes.post('/', [authentication_1.verifyToken], (req, res) => {
         res.json(err);
     });
 });
+// Service to upload files
+postRoutes.post('/upload', [authentication_1.verifyToken], (req, res) => {
+    if (!req.files) {
+        return res.status(400).json({
+            ok: false,
+            message: 'No file was uploaded'
+        });
+    }
+    const file = req.files.image;
+    if (!file) {
+        return res.status(400).json({
+            ok: false,
+            message: 'No file was uploaded - image'
+        });
+    }
+    if (!file.mimetype.includes('image')) {
+        return res.status(400).json({
+            ok: false,
+            message: 'File uploaded is not an image'
+        });
+    }
+    res.json({
+        ok: true,
+        file: file.mimetype
+    });
+});
 exports.default = postRoutes;

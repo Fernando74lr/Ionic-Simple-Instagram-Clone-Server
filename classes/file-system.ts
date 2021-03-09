@@ -1,6 +1,7 @@
 import { FileUpload } from "../interfaces/file-upload";
 import path from 'path';
 import fs from 'fs';
+import uniqid from 'uniqid';
 
 export default class FileSystem {
     
@@ -8,14 +9,30 @@ export default class FileSystem {
 
     saveImageTemp(file: FileUpload, userId: string) {
         
+        // Create folders
         const path = this.createUserFolder(userId);
+
+        // Filename
+        const filename = this.generateUniqueName(file.name);
+        console.log(file.name);        
+        console.log(filename);
+        
+
+
+    }
+
+    private generateUniqueName(originalName: string) {
+        const nameArr = originalName.split('.');
+        const extension = nameArr[nameArr.length - 1];
+        const uniqueID = uniqid();
+
+        return `${uniqueID}.${extension}`;
     }
 
     private createUserFolder(userId: string) {
 
         const pathUser = path.resolve(__dirname, '../uploads/', userId);
         const pathUserTemp = pathUser + '/temp';
-        console.log(pathUser);
         
         const exists = fs.existsSync(pathUser);
 

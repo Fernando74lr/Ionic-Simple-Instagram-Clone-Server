@@ -10,12 +10,23 @@ class FileSystem {
     constructor() { }
     ;
     saveImageTemp(file, userId) {
-        // Create folders
-        const path = this.createUserFolder(userId);
-        // Filename
-        const filename = this.generateUniqueName(file.name);
-        console.log(file.name);
-        console.log(filename);
+        return new Promise((res, rej) => {
+            // Create folders
+            const path = this.createUserFolder(userId);
+            // Filename
+            const filename = this.generateUniqueName(file.name);
+            // Move file from Temp to our folder
+            file.mv(`${path}/${filename}`, (err) => {
+                if (err) {
+                    // It failed
+                    rej(err);
+                }
+                else {
+                    // Allright!
+                    res();
+                }
+            });
+        });
     }
     generateUniqueName(originalName) {
         const nameArr = originalName.split('.');

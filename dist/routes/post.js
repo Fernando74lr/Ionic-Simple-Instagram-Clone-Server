@@ -50,7 +50,7 @@ postRoutes.post('/', [authentication_1.verifyToken], (req, res) => {
     });
 });
 // Service to upload files
-postRoutes.post('/upload', [authentication_1.verifyToken], (req, res) => {
+postRoutes.post('/upload', [authentication_1.verifyToken], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.files) {
         return res.status(400).json({
             ok: false,
@@ -70,10 +70,10 @@ postRoutes.post('/upload', [authentication_1.verifyToken], (req, res) => {
             message: 'File uploaded is not an image'
         });
     }
-    fileSystem.saveImageTemp(file, req.user._id);
+    yield fileSystem.saveImageTemp(file, req.user._id);
     res.json({
         ok: true,
         file: file.mimetype
     });
-});
+}));
 exports.default = postRoutes;

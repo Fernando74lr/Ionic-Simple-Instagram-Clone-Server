@@ -48,7 +48,7 @@ postRoutes.post('/', [verifyToken], (req: any, res: Response) => {
 });
 
 // Service to upload files
-postRoutes.post('/upload', [verifyToken], (req: any, res: Response) => {
+postRoutes.post('/upload', [verifyToken], async (req: any, res: Response) => {
     
     if (!req.files) {
         return res.status(400).json({
@@ -73,7 +73,7 @@ postRoutes.post('/upload', [verifyToken], (req: any, res: Response) => {
         });
     }
 
-    fileSystem.saveImageTemp(file, req.user._id); 
+    await fileSystem.saveImageTemp(file, req.user._id); 
 
     res.json({
         ok: true,

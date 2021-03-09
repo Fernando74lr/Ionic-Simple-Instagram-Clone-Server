@@ -44,5 +44,24 @@ class FileSystem {
         }
         return pathUserTemp;
     }
+    imagesFromTempToPost(userId) {
+        const pathTemp = path_1.default.resolve(__dirname, '../uploads/', userId, 'temp');
+        const pathPost = path_1.default.resolve(__dirname, '../uploads/', userId, 'posts');
+        if (!fs_1.default.existsSync(pathTemp)) {
+            return [];
+        }
+        if (!fs_1.default.existsSync(pathPost)) {
+            fs_1.default.mkdirSync(pathPost, { recursive: true });
+        }
+        const imagesTemp = this.getImagesInTemp(userId);
+        imagesTemp.forEach(image => {
+            fs_1.default.renameSync(`${pathTemp}/${image}`, `${pathPost}/${image}`);
+        });
+        return imagesTemp;
+    }
+    getImagesInTemp(userId) {
+        const pathTemp = path_1.default.resolve(__dirname, '../uploads/', userId, 'temp');
+        return fs_1.default.readdirSync(pathTemp) || [];
+    }
 }
 exports.default = FileSystem;

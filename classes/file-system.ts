@@ -31,11 +31,13 @@ export default class FileSystem {
     }
 
     private generateUniqueName(originalName: string) {
+
         const nameArr = originalName.split('.');
         const extension = nameArr[nameArr.length - 1];
         const uniqueID = uniqid();
 
         return `${uniqueID}.${extension}`;
+
     }
 
     private createUserFolder(userId: string) {
@@ -51,6 +53,34 @@ export default class FileSystem {
         }
 
         return pathUserTemp;
+
     }
 
+    imagesFromTempToPost(userId: string) {
+        const pathTemp = path.resolve(__dirname, '../uploads/', userId, 'temp');
+        const pathPost = path.resolve(__dirname, '../uploads/', userId, 'posts');
+
+        if (!fs.existsSync(pathTemp)) {
+            return [];
+        }
+
+        if (!fs.existsSync(pathPost)) {
+            fs.mkdirSync(pathPost, {recursive: true});
+        }
+
+        const imagesTemp = this.getImagesInTemp(userId);
+
+        imagesTemp.forEach(image => {
+            fs.renameSync(`${pathTemp}/${image}`, `${pathPost}/${image}`);
+        });
+
+        return imagesTemp;
+    }
+
+    private getImagesInTemp(userId: string) {
+
+        const pathTemp = path.resolve(__dirname, '../uploads/', userId, 'temp');
+        return fs.readdirSync(pathTemp) || [];
+
+    }
 }

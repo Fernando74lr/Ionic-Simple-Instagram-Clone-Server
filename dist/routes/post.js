@@ -8,11 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const file_system_1 = __importDefault(require("../classes/file-system"));
 const authentication_1 = require("../middlewares/authentication");
 const post_model_1 = require("../models/post.model");
 const postRoutes = express_1.Router();
+const fileSystem = new file_system_1.default();
 // Get paginated posts
 postRoutes.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let page = Number(req.query.page) || 1;
@@ -65,6 +70,7 @@ postRoutes.post('/upload', [authentication_1.verifyToken], (req, res) => {
             message: 'File uploaded is not an image'
         });
     }
+    fileSystem.saveImageTemp(file, req.user._id);
     res.json({
         ok: true,
         file: file.mimetype

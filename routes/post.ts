@@ -1,9 +1,11 @@
 import { Response, Router } from "express";
+import FileSystem from "../classes/file-system";
 import  { FileUpload }  from "../interfaces/file-upload";
 import { verifyToken } from "../middlewares/authentication";
 import { Post } from "../models/post.model";
 
 const postRoutes = Router();
+const fileSystem = new FileSystem();
 
 // Get paginated posts
 postRoutes.get('/', async (req: any, res: Response) => {
@@ -25,7 +27,6 @@ postRoutes.get('/', async (req: any, res: Response) => {
     });
 
 });
-
 
 // Create post
 postRoutes.post('/', [verifyToken], (req: any, res: Response) => {
@@ -71,6 +72,8 @@ postRoutes.post('/upload', [verifyToken], (req: any, res: Response) => {
             message: 'File uploaded is not an image'
         });
     }
+
+    fileSystem.saveImageTemp(file, req.user._id); 
 
     res.json({
         ok: true,

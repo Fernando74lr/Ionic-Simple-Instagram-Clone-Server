@@ -83,4 +83,9 @@ export default class FileSystem {
         return fs.readdirSync(pathTemp) || [];
 
     }
+
+    getPhotoUrl(userId: string, img: string) {
+        const pathPhoto = path.resolve(__dirname, '../uploads/', userId, 'posts', img);
+        return pathPhoto;        
+    }
 }

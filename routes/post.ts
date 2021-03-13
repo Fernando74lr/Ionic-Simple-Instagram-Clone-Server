@@ -91,11 +91,6 @@ postRoutes.get('/image/:userid/:img', (req: any, res: Response) => {
     const pathPhoto = fileSystem.getPhotoUrl(userId, img);
 
     res.sendFile(pathPhoto);
-
-    res.json({
-        userId,
-        img
-    });
 });
 
 export  default postRoutes;

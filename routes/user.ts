@@ -110,4 +110,14 @@ userRoutes.post('/update', verifyToken, (req: any, res: Response) => {
     
 });
 
+// Get user info
+userRoutes.get('/', [verifyToken], (req: any, res: Response) => {
+    const user = req.user;
+
+    res.json({
+        ok: true,
+        user
+    })
+});
+
 export default userRoutes;
